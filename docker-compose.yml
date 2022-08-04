@@ -1,0 +1,23 @@
+services:
+  app:
+    build: .
+    volumes:
+      - .:/app
+    depends_on:
+      - mongo
+    networks:
+      local:
+        ipv4_address: "172.21.1.2"
+  mongo:
+    image: mongo
+    restart: always
+    networks:
+      local:
+        ipv4_address: "172.21.1.3"
+networks:
+  local:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.1.0/24
+          gateway: 172.21.1.1
